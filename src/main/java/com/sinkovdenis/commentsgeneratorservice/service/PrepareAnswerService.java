@@ -23,12 +23,13 @@ public class PrepareAnswerService {
         JSONObject request = prepareRequestData(data);
         JSONObject response = new JSONObject();
 
-        response.put("commentator", commentatorName);
-        if(request.get("filename") != null) {
-            response.put("message", "So nice picture");
+        response.put("author", commentatorName);
+        response.put("post", request.get("id"));
+        if(!request.isNull("filename")) {
+            response.put("text", "So nice picture");
             redisMessagePublisher.publish(response);
         } else if(request.get("text") != null) {
-            response.put("message", "It is very curious");
+            response.put("text", "It is very curious");
             redisMessagePublisher.publish(response);
         }
     }
